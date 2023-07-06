@@ -18,16 +18,13 @@ class RoughSetsReducer:
 
         p, q = self.__size(x)
         ap, aq = self.__size(a)
-        z = [e for e in range(1, q+1)]
+        z = list(range(1, q+1))
         tt = np.setdiff1d(z, a)
         tt_ind = np.setdiff1d(z, tt)-1
-        if x.ndim == 1:
-            x = x[tt_ind]
-        else:
-            x = x[:, tt_ind]
+        x = x[tt_ind] if x.ndim == 1 else x[:, tt_ind]
         y = x
         v = [codea(aq, y, 10) for i in range(0, p)] if y.ndim == 1 \
-            else [codea(aq, y[i, :], 10) for i in range(0, p)]
+                else [codea(aq, y[i, :], 10) for i in range(0, p)]
         y = np.transpose(v)
         if y.shape[0] == 1 and len(y.shape) == 1:
             I, yy = [1], [y]
@@ -111,7 +108,7 @@ class RoughSetsReducer:
         q = self.indisc(d, x)
         pp = self.indisc(c, x)
         b, w = self.__pospq(pp, q)
-        a, k, kk, p = ([[]] * cq for i in range(4))
+        a, k, kk, p = ([[]] * cq for _ in range(4))
         y = []
         for u in range(0, cq):
             ind = u+1
